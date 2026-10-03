@@ -1,0 +1,175 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://pamilanga.com/schemas/evidence-event-v0.1.schema.json",
+  "title": "PAMILANGA EVIDENCE Event v0.1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "event_id",
+    "run_id",
+    "source",
+    "time",
+    "event_type",
+    "payload",
+    "integrity",
+    "quality",
+    "provenance",
+    "relationships"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "0.1.0"
+    },
+    "event_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "run_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "source": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "source_id",
+        "source_type",
+        "producer"
+      ],
+      "properties": {
+        "source_id": {
+          "type": "string"
+        },
+        "source_type": {
+          "type": "string"
+        },
+        "producer": {
+          "type": "string"
+        }
+      }
+    },
+    "time": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "event_time_ns",
+        "capture_time_ns",
+        "clock_domain",
+        "sequence"
+      ],
+      "properties": {
+        "event_time_ns": {
+          "type": "integer"
+        },
+        "capture_time_ns": {
+          "type": "integer"
+        },
+        "clock_domain": {
+          "type": "string"
+        },
+        "sequence": {
+          "type": "integer",
+          "minimum": 0
+        }
+      }
+    },
+    "event_type": {
+      "enum": [
+        "observation",
+        "state",
+        "perception",
+        "fusion",
+        "decision",
+        "command",
+        "actuation",
+        "system"
+      ]
+    },
+    "payload": {
+      "type": "object",
+      "required": [
+        "format",
+        "data"
+      ],
+      "properties": {
+        "format": {
+          "type": "string"
+        },
+        "data": {}
+      }
+    },
+    "integrity": {
+      "type": "object",
+      "required": [
+        "payload_hash",
+        "previous_event_hash"
+      ],
+      "properties": {
+        "payload_hash": {
+          "type": "string"
+        },
+        "previous_event_hash": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      }
+    },
+    "quality": {
+      "type": "object",
+      "required": [
+        "confidence",
+        "freshness_ms",
+        "valid"
+      ],
+      "properties": {
+        "confidence": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "freshness_ms": {
+          "type": "number",
+          "minimum": 0
+        },
+        "valid": {
+          "type": "boolean"
+        }
+      }
+    },
+    "provenance": {
+      "type": "object",
+      "required": [
+        "origin",
+        "transform_chain"
+      ],
+      "properties": {
+        "origin": {
+          "type": "string"
+        },
+        "transform_chain": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "relationships": {
+      "type": "object",
+      "required": [
+        "parent_event_ids"
+      ],
+      "properties": {
+        "parent_event_ids": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  }
+}
