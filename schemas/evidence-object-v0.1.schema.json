@@ -1,0 +1,57 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://pamilanga.com/schemas/evidence-object-v0.1.schema.json",
+  "title": "PAMILANGA EVIDENCE Object v0.1",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "evidence_object_id",
+    "run",
+    "evidence",
+    "temporal_integrity",
+    "reconstruction",
+    "first_divergence",
+    "causal_hypotheses",
+    "counterfactual_replays",
+    "evidence_sufficiency",
+    "integrity"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "0.1.0"
+    },
+    "evidence_object_id": {
+      "type": "string"
+    },
+    "run": {
+      "type": "object"
+    },
+    "evidence": {
+      "type": "object"
+    },
+    "temporal_integrity": {
+      "type": "object"
+    },
+    "reconstruction": {
+      "type": "object"
+    },
+    "first_divergence": {
+      "type": [
+        "object",
+        "null"
+      ]
+    },
+    "causal_hypotheses": {
+      "type": "array"
+    },
+    "counterfactual_replays": {
+      "type": "array"
+    },
+    "evidence_sufficiency": {
+      "type": "object"
+    },
+    "integrity": {
+      "type": "object"
+    }
+  }
+}
