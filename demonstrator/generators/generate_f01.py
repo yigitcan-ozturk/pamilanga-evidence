@@ -4,7 +4,7 @@ from pathlib import Path
 from pamilanga_evidence.replay import first_divergence
 from pamilanga_evidence.trace.integrity import event_hash
 from pamilanga_evidence.trace.recorder import TraceRecorder
-from pamilanga_evidence.trace.verifier import verify_stream
+from pamilanga_evidence.trace.run_verifier import verify_run
 
 HERE = Path(__file__).resolve().parent
 ROOT = HERE.parents[1]
@@ -34,7 +34,6 @@ def main() -> None:
     stream.unlink(missing_ok=True)
 
     sealed = TraceRecorder(stream).record(faulted["events"])
-    verification = verify_stream(stream)
     root_hash = event_hash(sealed[-1]) if sealed else None
     manifest = {
         "schema_version": "0.1.0",
@@ -49,6 +48,7 @@ def main() -> None:
         [comparison_view(e) for e in faulted["events"]],
     )
     (RUN_DIR / "manifest.json").write_text(json.dumps(manifest, indent=2) + "\n", encoding="utf-8")
+    verification = verify_run(stream, RUN_DIR / "manifest.json")
     (RUN_DIR / "verification.json").write_text(json.dumps(verification, indent=2) + "\n", encoding="utf-8")
     (RUN_DIR / "first_divergence.json").write_text(json.dumps(divergence, indent=2) + "\n", encoding="utf-8")
 
